@@ -1,10 +1,13 @@
-zmq
-Jinja2==2.7.3
-MarkupSafe==0.23
 PyYAML==3.11
-aiohttp==0.9.2
+SQLAlchemy==1.0.4
+aiohttp==0.16.2
+aiopg==0.7.0
 aiozmq==0.5.2
 argparse==1.2.1
 asyncio==3.4.1
+chardet==2.3.0
+hashids==1.1.0
+psycopg2==2.6
+zmq
 pyzmq==14.3.1
 trafaret==0.5.3
