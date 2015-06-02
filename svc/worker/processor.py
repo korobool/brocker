@@ -10,6 +10,11 @@ import sqlalchemy as sa
 from svc.worker.base_processor import BaseProcessor
 from utils.dbconstructor import test
 
+import logging
+
+
+logger = logging.getLogger('worker')
+
 
 class Processor(BaseProcessor):
     def __init__(self, loop=None):
@@ -96,6 +101,6 @@ class Processor(BaseProcessor):
         else:
             resp = {}
 
-        print('!!!!!!!!!!! CONNECTION: {} !!!!!!!!!!'.format(device_os))
+        logger.info('Connected User-Agent: {}'.format(device_os))
 
         return json.dumps(resp)
