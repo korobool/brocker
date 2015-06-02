@@ -8,6 +8,7 @@ from aiopg.sa import create_engine
 import sqlalchemy as sa
 
 from svc.base_processor import BaseProcessor
+from utils.dbconstructor import test
 
 
 class Processor(BaseProcessor):
@@ -32,8 +33,8 @@ class Processor(BaseProcessor):
     def _get_ids(self):
         now = datetime.utcnow()
         hashids = Hashids(salt='phone master')
-        id = int(now.strftime("%Y%m%d%H%M%S%f"))
-        short_hash = hashids.encode(id)
+        id = now.strftime("%Y%m%d%H%M%S%f")
+        short_hash = hashids.encode(str(id))
         res = {
             "hash": short_hash,
             "id": id
@@ -43,6 +44,23 @@ class Processor(BaseProcessor):
     @asyncio.coroutine
     def shorten(self, data):
         ids_data = yield from self._get_ids()
+
+        with (yield from self.pg_pool) as conn:
+            tr = yield from conn.begin()
+            data = json.loads(data)
+            yield from conn.execute(
+                test.insert().values(
+                    id=ids_data["id"],
+                    short_url=ids_data["hash"],
+                    domain=data.get("domain", ""),
+                    appId=data.get("appId", ""),
+                    userId=data.get("userId", ""),
+                    url_android=data.get("url", {}).get("android", ""),
+                    url_apple=data.get("url", {}).get("apple", "")
+                )
+            )
+            yield from tr.commit()
+        
         resp = {
             "shortUrl": "http://pm.me/{}".format(ids_data["hash"]),
             "hash": ids_data["hash"],
