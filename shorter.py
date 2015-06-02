@@ -11,7 +11,7 @@ import trafaret as t
 import yaml
 import zmq
 
-from svc.processor import Processor
+from svc.worker.processor import Processor
 from svc.worker.task_worker import TaskWorker
 
 logger = logging.getLogger()
