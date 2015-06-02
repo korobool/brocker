@@ -7,8 +7,9 @@ from hashids import Hashids
 from aiopg.sa import create_engine
 import sqlalchemy as sa
 
-from svc.base_processor import BaseProcessor
+from svc.worker.base_processor import BaseProcessor
 from utils.dbconstructor import test
+
 
 class Processor(BaseProcessor):
     def __init__(self, loop=None):

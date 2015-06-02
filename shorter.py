@@ -1,19 +1,18 @@
-import aiozmq
 import argparse
 import asyncio
 import logging
 import logging.handlers
 import os
 import sys
+from os.path import join, normpath, abspath, dirname
+
+import aiozmq
 import trafaret as t
 import yaml
 import zmq
 
-from os.path import join, normpath, abspath, dirname
-
 from svc.processor import Processor
-from svc.task_worker import TaskWorker
-
+from svc.worker.task_worker import TaskWorker
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)

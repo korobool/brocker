@@ -5,7 +5,7 @@ from aiohttp import web
 import zmq
 import aiozmq
 
-from svc.task_dispatcher import TaskDispatcher, DispatchNoFreeWorkerError, \
+from svc.brocker.task_dispatcher import TaskDispatcher, DispatchNoFreeWorkerError, \
     DispatchTimeoutError, DispatchBadRequestError
 
 

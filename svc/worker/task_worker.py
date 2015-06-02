@@ -1,16 +1,14 @@
 import asyncio
+import logging
+
 import aiozmq
-import time
 
 from svc.proto import Proto
-
-import logging
 
 logger = logging.getLogger('worker')
 
 
 class TaskWorker(aiozmq.ZmqProtocol):
-
     transport = None
 
     def __init__(self, on_close, processor=None, loop=None):
@@ -23,16 +21,15 @@ class TaskWorker(aiozmq.ZmqProtocol):
         self.queue = asyncio.Queue(loop=loop)
 
         self.proto_handlers = {
-            Proto.KA    : self._handle_proto_ka,
+            Proto.KA: self._handle_proto_ka,
             # Proto.ACK   : self._handle_proto_ack,
-            Proto.TASK  : self._handle_proto_task,
+            Proto.TASK: self._handle_proto_task,
         }
         asyncio.async(self._process())
 
     def connection_made(self, transport):
         self.transport = transport
-        msg = []
-        msg.append(Proto.READY.encode())
+        msg = [Proto.READY.encode()]
         for method in self.methods:
             msg.append(method.encode())
         transport.write(msg)
@@ -91,4 +88,3 @@ class TaskWorker(aiozmq.ZmqProtocol):
 
             result = yield from process_method(param)
             self.tasks[task_id].set_result((task_id, result))
-
