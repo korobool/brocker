@@ -51,7 +51,7 @@ class TaskDispatcher(aiozmq.ZmqProtocol):
 
     def msg_received(self, msg):
 
-        logger.info('recv:{}'.format(msg))
+        logger.debug('recv:{}'.format(msg))
 
         identify = ''.join(map(chr, msg[0]))
         command = msg[1].decode()

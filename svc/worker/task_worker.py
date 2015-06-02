@@ -40,7 +40,7 @@ class TaskWorker(aiozmq.ZmqProtocol):
 
     def msg_received(self, msg):
 
-        logger.info('recv:{}'.format(msg))
+        logger.debug('recv:{}'.format(msg))
 
         command = msg[0].decode()
 
