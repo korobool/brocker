@@ -24,4 +24,5 @@ test = sa.Table('test', metadata,
 
 connection_query = 'postgresql+psycopg2://{}:{}@{}/{}'.format(LOGIN, PASSW, HOST, DBNAME)
 engine = sa.create_engine(connection_query)
+test.drop(engine, checkfirst=True)
 metadata.create_all(engine)
