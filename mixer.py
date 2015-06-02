@@ -1,9 +1,7 @@
-from datetime import datetime
 import json
 import asyncio
+
 from aiohttp import web
-from hashids import Hashids
-# from user_agents import parse
 import zmq
 import aiozmq
 
@@ -37,9 +35,14 @@ class Handler():
 
     @asyncio.coroutine
     def expand(self, request):
-        short_url = request.match_info['hash']
+
+        params = {
+            'ua_string': request.headers["USER-AGENT"],
+            'short_url': request.match_info['hash']
+        }
+
         try:
-            result = yield from self.task_dispatcher.process('expand', json.dumps(short_url))
+            result = yield from self.task_dispatcher.process('expand', json.dumps(params))
 
         except (DispatchNoFreeWorkerError, asyncio.CancelledError):
             return web.web_exceptions.HTTPInternalServerError()
