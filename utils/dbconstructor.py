@@ -22,7 +22,8 @@ test = sa.Table('test', metadata,
                      sa.Column('url_apple', sa.UnicodeText, nullable=False)
                      )
 
-connection_query = 'postgresql+psycopg2://{}:{}@{}/{}'.format(LOGIN, PASSW, HOST, DBNAME)
-engine = sa.create_engine(connection_query)
-test.drop(engine, checkfirst=True)
-metadata.create_all(engine)
+if __name__ == '__main__':
+    connection_query = 'postgresql+psycopg2://{}:{}@{}/{}'.format(LOGIN, PASSW, HOST, DBNAME)
+    engine = sa.create_engine(connection_query)
+    test.drop(engine, checkfirst=True)
+    metadata.create_all(engine)
