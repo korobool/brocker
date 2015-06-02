@@ -1,0 +1,4 @@
+logfile_path: logs/shorter.log
+server: '127.0.0.1'
+port: 7777
+connections: 1
