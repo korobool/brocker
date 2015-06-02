@@ -98,9 +98,10 @@ class Processor(BaseProcessor):
                     "apple": resp_res[6]
                 }
             }
+            print("!!!!!!!!! DEVICE OS: {}".format(device_os))
+            print("\n\n\n!!!!!!!!! DATA: {}\n\n\n".format(resp))
         else:
+            print("LINK WASN'T FOUND, but os is {}".format(device_os))
             resp = {}
-
-        logger.info('Connected User-Agent: {}'.format(device_os))
 
         return json.dumps(resp)
