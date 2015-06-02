@@ -31,7 +31,7 @@ class Processor(BaseProcessor):
         now = datetime.utcnow()
         hashids = Hashids(salt='phone master')
         id = now.strftime("%Y%m%d%H%M%S%f")
-        short_hash = hashids.encode(str(id))
+        short_hash = hashids.encode(int(id))
         res = {
             "hash": short_hash,
             "id": id
@@ -45,6 +45,7 @@ class Processor(BaseProcessor):
         with (yield from self.pg_pool) as conn:
             tr = yield from conn.begin()
             data = json.loads(data)
+            data = data["post_data"]
             yield from conn.execute(
                 test.insert().values(
                     id=ids_data["id"],
@@ -52,8 +53,8 @@ class Processor(BaseProcessor):
                     domain=data.get("domain", ""),
                     appId=data.get("appId", ""),
                     userId=data.get("userId", ""),
-                    url_android=data.get("url", {}).get("android", ""),
-                    url_apple=data.get("url", {}).get("apple", "")
+                    url_android=data.get("urls", {}).get("android", ""),
+                    url_apple=data.get("urls", {}).get("apple", "")
                 )
             )
             yield from tr.commit()
