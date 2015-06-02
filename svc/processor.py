@@ -79,8 +79,7 @@ class Processor(BaseProcessor):
             query = (sa.select([test], use_labels=True)
                 .where(test.c.short_url == short_url))
             res = yield from conn.execute(query)
-            for row in res:
-                resp_res = row
+            resp_res = yield from res.fetchone()
         if resp_res:
             resp = {
                 "id": resp_res[0],
