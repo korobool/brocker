@@ -98,15 +98,4 @@ class Processor(BaseProcessor):
 
         print('!!!!!!!!!!! CONNECTION: {} !!!!!!!!!!'.format(device_os))
 
-        # resp = {
-        #     "id": "1538542342144",
-        #     "hash": "z1lN3aVAa",
-        #     "userId": "12345",
-        #     "appId": "12345",
-        #     "domain": "pm.me",
-        #     "urls": {
-        #         "android": "https://play.google.com/store/apps/details?id=me.valutchik.app",
-        #         "apple": "https://itunes.apple.com/us/app/valutcik/id978512096?mt=8"
-        #     }
-        # }
         return json.dumps(resp)
