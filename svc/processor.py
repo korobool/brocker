@@ -51,7 +51,8 @@ class Processor(BaseProcessor):
     @asyncio.coroutine
     def expand(self, data):
         params = json.loads(data)
-        user_agent = parse(params['params'])
+        short_url = params['short_url']
+        user_agent = parse(params['ua_string'])
         device_os = user_agent.os.family
 
         print('!!!!!!!!!!! CONNECTION: {} !!!!!!!!!!'.format(device_os))
