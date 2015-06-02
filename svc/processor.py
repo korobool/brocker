@@ -5,6 +5,7 @@ import json
 from user_agents import parse
 from hashids import Hashids
 from aiopg.sa import create_engine
+import sqlalchemy as sa
 
 from svc.base_processor import BaseProcessor
 from utils.dbconstructor import test
@@ -72,17 +73,40 @@ class Processor(BaseProcessor):
         user_agent = parse(params['ua_string'])
         device_os = user_agent.os.family
 
+        resp = None
+        resp_res = None
+        with (yield from self.pg_pool) as conn:
+            query = (sa.select([test], use_labels=True)
+                .where(test.c.short_url == short_url))
+            res = yield from conn.execute(query)
+            for row in res:
+                resp_res = row
+        if resp_res:
+            resp = {
+                "id": resp_res[0],
+                "hash": resp_res[1],
+                "userId": resp_res[2],
+                "appId": resp_res[3],
+                "domain": resp_res[4],
+                "urls": {
+                    "android": resp_res[5],
+                    "apple": resp_res[6]
+                }
+            }
+        else:
+            resp = {}
+
         print('!!!!!!!!!!! CONNECTION: {} !!!!!!!!!!'.format(device_os))
 
-        resp = {
-            "id": "1538542342144",
-            "hash": "z1lN3aVAa",
-            "userId": "12345",
-            "appId": "12345",
-            "domain": "pm.me",
-            "urls": {
-                "android": "https://play.google.com/store/apps/details?id=me.valutchik.app",
-                "apple": "https://itunes.apple.com/us/app/valutcik/id978512096?mt=8"
-            }
-        }
+        # resp = {
+        #     "id": "1538542342144",
+        #     "hash": "z1lN3aVAa",
+        #     "userId": "12345",
+        #     "appId": "12345",
+        #     "domain": "pm.me",
+        #     "urls": {
+        #         "android": "https://play.google.com/store/apps/details?id=me.valutchik.app",
+        #         "apple": "https://itunes.apple.com/us/app/valutcik/id978512096?mt=8"
+        #     }
+        # }
         return json.dumps(resp)
