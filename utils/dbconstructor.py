@@ -13,7 +13,7 @@ HOST = 'localhost'
 metadata = sa.MetaData()
 
 test = sa.Table('test', metadata,
-                     sa.Column('id', sa.Integer, primary_key=True),
+                     sa.Column('id', sa.BigInteger, primary_key=True),
                      sa.Column('short_url', sa.UnicodeText, nullable=False),
                      sa.Column('domain', sa.UnicodeText, nullable=False),
                      sa.Column('appId', sa.UnicodeText, nullable=False),

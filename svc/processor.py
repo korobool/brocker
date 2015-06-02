@@ -7,7 +7,7 @@ from hashids import Hashids
 from aiopg.sa import create_engine
 
 from svc.base_processor import BaseProcessor
-
+from utils.dbconstructor import test
 
 class Processor(BaseProcessor):
     def __init__(self, loop=None):
@@ -41,6 +41,20 @@ class Processor(BaseProcessor):
     @asyncio.coroutine
     def shorten(self, data):
         ids_data = yield from self._get_ids()
+        with (yield from self.pg_pool) as conn:
+
+            tr = yield from conn.begin()
+            # uid = yield from conn.scalar(
+            #     test.insert().values(name=name, birthday=gen_birthday()))
+            # yield from conn.execute(test.insert().values(
+            #         id=ids_data["id"],
+            #         short_url=ids_data["hash"]))
+            uid = yield from conn.scalar(
+                test.insert().values(
+                    id=ids_data["id"],
+                    short_url=ids_data["hash"]))
+            yield from tr.commit()
+
         resp = {
             "shortUrl": "http://pm.me/{}".format(ids_data["hash"]),
             "hash": ids_data["hash"],
