@@ -1,24 +1,24 @@
-### H3 0.0 Ознакомление
+### 0.0 Ознакомление
 ```
     GET /home
 ```
-### H3 1.0 Вход
+### 1.0 Вход
 ```
     POST /login
     data: {“login”: “login”, “pwd”: “password”}
 ```
-### H3 1.1 Регистрация
+### 1.1 Регистрация
 ```
     POST /register
     data: {“login”: “login”, “pwd”: “password”}
 ```
-### H3 1.0.1 Восстановление пароля
+### 1.0.1 Восстановление пароля
 ```
     POST /login/reminder
     data: {“email”: “email@email.com”}
 ```
 
-### H3 2.0 Список приложений
+### 2.0 Список приложений
 ```
     GET /apps
     response: [...] // list of apps
@@ -26,7 +26,7 @@
     ??? /share
 ```
 
-### H3 2.1 Фильтр
+### 2.1 Фильтр
     Cache instead of requests
 
 ### H3 3.0 Профиль
@@ -42,7 +42,7 @@
     ??? /install
     ??? /share
 
-### H3 4.1 Детально приложение
+### 4.1 Детально приложение
 ```
     GET /apps/details?id=app-123-456
     In: {“id”: “app-123-456”}
@@ -57,51 +57,51 @@
     Out: [{"name": "Name", "rate": 190}, ...]
 ```
 
-### H3 6.0 Настройки
+### 6.0 Настройки
     ??? /settings
 ### H3 7.0 Профиль
     ??? /account
 
-### H3 8.0 Вывод
+### 8.0 Вывод
 ```
     POST /withdraw
     data: {“type”: “webmoney”, “country”: “UA”}
 ```
-### H3 8.1 Подтверждение номера тел.
+### 8.1 Подтверждение номера тел.
 ```
     POST /phone/confirm
     data: {"phone": "+380505552233"}
 ```
     Need some short message service
     
-### H3 8.1.1 Выбор страны
+### 8.1.1 Выбор страны
     Consumption: The correspondance list is stored in app locally.
 
-### H3 8.2 Выбор страны
+### 8.2 Выбор страны
 
-### H3 8.3 Выбор метода вывода
+### 8.3 Выбор метода вывода
 ```
     GET /withdraw/types
 ```
 
-### H3 9.0 Расскажи…
+### 9.0 Расскажи…
 ```
     POST /shorten
     data: {"appId": "app-123", ...}
     ??? /share
 ```
-### H3 9.1 Список контактов и приложений
+### 9.1 Список контактов и приложений
 ```
     POST /contacts
 ```
     Do we need refresh?
 
-### H3 10.0 Уведомления
+### 10.0 Уведомления
 ```
     GET /notifications (/alerts, /news, /feed)
 ```
 
-### H3 11.0 Меню
+### 11.0 Меню
 ```
     GET /account
     GET /notifications
